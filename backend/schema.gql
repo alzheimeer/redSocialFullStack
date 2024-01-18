@@ -1,0 +1,81 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Usuario {
+  id: ID!
+  email: String!
+  fullname: String!
+  age: Float!
+  posts: [Post!]!
+  active: Boolean!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deleted: Boolean!
+  deletedAt: DateTime
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Post {
+  id: ID!
+  title: String!
+  content: String!
+  likes: Float
+  userId: ID!
+  active: Boolean!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+}
+
+type Query {
+  Posts(limit: Float, page: Float): [Post!]!
+  PostById(id: String!): Post
+  users(includeSoftDeleted: Boolean!): [Usuario!]!
+  userById(id: String!): Usuario
+  userByEmail(email: String!): Usuario
+  loginUser(loginUserDto: LoginUserDto!): String!
+}
+
+input LoginUserDto {
+  email: String!
+  password: String!
+}
+
+type Mutation {
+  createPost(createPostDto: CreatePostInput!): Post!
+  updatePost(id: String!, updatePostDto: UpdatePostInput!): Post!
+  deletePost(id: String!): Boolean!
+  updatePostActive(id: String!, active: Boolean!): Post!
+  registerUser(createUserDto: CreateUserDto!): Usuario!
+  updateEmail(userId: String!, newEmail: String!): Usuario!
+  updatePassword(userId: String!, newPassword: String!): Usuario!
+  deleteUser(id: String!): Boolean!
+  updateUserActive(id: String!, active: Boolean!): Usuario!
+}
+
+input CreatePostInput {
+  title: String!
+  content: String!
+  likes: Float
+  userId: String!
+}
+
+input UpdatePostInput {
+  title: String
+  content: String
+  likes: Float
+  userId: String
+  active: Boolean
+}
+
+input CreateUserDto {
+  email: String!
+  password: String!
+  fullname: String!
+  age: Float!
+}
